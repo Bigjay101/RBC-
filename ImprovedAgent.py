@@ -6,7 +6,7 @@ import os
 STOCKFISH_ENV_VAR = 'STOCKFISH_PATH'
 
 
-class TroutBot(Player):
+class ImprovedAgent(Player):
     """
     TroutBot uses the Stockfish chess engine to choose moves. In order to run TroutBot you'll need to download
     Stockfish from https://stockfishchess.org/download/ and create an environment variable called STOCKFISH_EXECUTABLE
