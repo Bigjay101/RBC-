@@ -3,7 +3,7 @@ import random
 from reconchess import *
 import os
 
-STOCKFISH_ENV_VAR = 'STOCKFISH_EXECUTABLE'
+STOCKFISH_ENV_VAR = 'STOCKFISH_PATH'
 
 
 class TroutBot(Player):
@@ -12,7 +12,7 @@ class TroutBot(Player):
     Stockfish from https://stockfishchess.org/download/ and create an environment variable called STOCKFISH_EXECUTABLE
     that is the path to the downloaded Stockfish executable.
     """
-
+    #DONE
     def __init__(self):
         self.board = None
         self.color = None
@@ -32,16 +32,19 @@ class TroutBot(Player):
         # initialize the stockfish engine
         self.engine = chess.engine.SimpleEngine.popen_uci(stockfish_path, setpgrp=True)
 
+    #DONE
     def handle_game_start(self, color: Color, board: chess.Board, opponent_name: str):
         self.board = board
         self.color = color
 
+    #DONE
     def handle_opponent_move_result(self, captured_my_piece: bool, capture_square: Optional[Square]):
         # if the opponent captured our piece, remove it from our board.
         self.my_piece_captured_square = capture_square
         if captured_my_piece:
             self.board.remove_piece_at(capture_square)
 
+    #TODO : Jordan
     def choose_sense(self, sense_actions: List[Square], move_actions: List[chess.Move], seconds_left: float) -> \
             Optional[Square]:
         # if our piece was just captured, sense where it was captured
@@ -59,11 +62,13 @@ class TroutBot(Player):
                 sense_actions.remove(square)
         return random.choice(sense_actions)
 
+    #DONE
     def handle_sense_result(self, sense_result: List[Tuple[Square, Optional[chess.Piece]]]):
         # add the pieces in the sense result to our board
         for square, piece in sense_result:
             self.board.set_piece_at(square, piece)
 
+    #TODO : KK
     def choose_move(self, move_actions: List[chess.Move], seconds_left: float) -> Optional[chess.Move]:
         # if we might be able to take the king, try to
         enemy_king_square = self.board.king(not self.color)
@@ -88,12 +93,14 @@ class TroutBot(Player):
         # if all else fails, pass
         return None
 
+    #DONE
     def handle_move_result(self, requested_move: Optional[chess.Move], taken_move: Optional[chess.Move],
                            captured_opponent_piece: bool, capture_square: Optional[Square]):
         # if a move was executed, apply it to our board
         if taken_move is not None:
             self.board.push(taken_move)
 
+    #DONE
     def handle_game_end(self, winner_color: Optional[Color], win_reason: Optional[WinReason],
                         game_history: GameHistory):
         try:
