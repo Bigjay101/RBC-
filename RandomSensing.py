@@ -65,7 +65,6 @@ class ImprovedAgent(Player):
     #NEEDS IMPROVEMENT : Jordan + Nolwazi
     def choose_sense(self, sense_actions: List[Square], move_actions: List[chess.Move], seconds_left: float) -> \
             Optional[Square]:
-
         # making sure sense_actions is only from the interior squares
         sense_actions = [square for square in sense_actions if chess.square_file(square) > 0 and chess.square_file(square) < 7 and chess.square_rank(square) > 0 and chess.square_rank(square) < 7]
         original_sense_actions = sense_actions.copy()
@@ -104,7 +103,7 @@ class ImprovedAgent(Player):
         self.possible_boards = new_possible_boards
 
 
-    #TODO : KK
+    #DONE
     def choose_move(self, move_actions: List[chess.Move], seconds_left: float) -> Optional[chess.Move]:
         move_counts = defaultdict(int)  # Using defaultdict for move counting
         if len(self.possible_boards) > 10000:
