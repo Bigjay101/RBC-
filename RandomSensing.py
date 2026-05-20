@@ -20,6 +20,7 @@ class ImprovedAgent(Player):
         self.possible_boards = set()
         self.color = None
         self.my_piece_captured_square = None
+        self.first_opponent_result = True
 
         # make sure stockfish environment variable exists
         if STOCKFISH_ENV_VAR not in os.environ:
@@ -42,6 +43,10 @@ class ImprovedAgent(Player):
 
     #DONE
     def handle_opponent_move_result(self, captured_my_piece: bool, capture_square: Optional[Square]):
+
+        if self.first_opponent_result and self.color == chess.WHITE:
+            self.first_opponent_result = False
+            return
         self.my_piece_captured_square = capture_square
         new_possible_boards = set()
 

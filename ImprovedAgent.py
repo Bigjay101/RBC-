@@ -25,6 +25,7 @@ class ImprovedAgent(Player):
         self.possible_boards = set()
         self.color = None
         self.my_piece_captured_square = None
+        self.first_opponent_result = True
 
         if STOCKFISH_ENV_VAR not in os.environ:
             raise KeyError(
@@ -55,6 +56,10 @@ class ImprovedAgent(Player):
           - Also includes the null move (opponent might have passed / been forced to).
           - Cap lowered from 10,000 → MAX_BOARDS (500) for speed.
         """
+        if self.first_opponent_result and self.color == chess.WHITE:
+            self.first_opponent_result = False
+            return
+        
         self.my_piece_captured_square = capture_square
         new_possible_boards = set()
 
